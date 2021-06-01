@@ -24,9 +24,9 @@ const login = async (req, res) => {
     }
 
     const accessToken = createJWT(user.email, user._id, "24h", res);
-    const decoded = Boolean(await verifyUser(accessToken, res));
+    const decodedUser = await verifyUser(accessToken, res);
 
-    if (decoded) {
+    if (decodedUser) {
       return res.status(200).json({
         success: true,
         data: user,
