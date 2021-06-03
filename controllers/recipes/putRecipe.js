@@ -13,7 +13,7 @@ const putRecipe = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (recipe.userEmail !== email) {
+    if (recipe.email !== email) {
       return res
         .status(422)
         .json({ errors: [{ message: "Recipe doesn't belong to user" }] });

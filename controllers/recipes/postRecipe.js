@@ -1,16 +1,18 @@
 const { Recipe } = require("../../models");
+const { verifyUser } = require("../../utils");
 
-const postRecipe = (req, res) => {
+const postRecipe = async (req, res) => {
   try {
-    const { title, summary, mealType, ingredients, steps, userEmail } =
-      req.body;
+    const { title, summary, mealType, ingredients, steps, token } = req.body;
+
+    const { email } = await verifyUser(token, res);
 
     const newRecipe = new Recipe({
       title,
+      email,
       steps,
       summary,
       mealType,
-      userEmail,
       ingredients,
     });
 

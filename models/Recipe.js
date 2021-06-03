@@ -2,13 +2,17 @@ const { Schema, model } = require("mongoose");
 
 const Recipe = Schema(
   {
-    userEmail: {
+    email: {
       type: String,
       default: null,
     },
     title: {
       type: String,
       required: true,
+    },
+    img: {
+      data: Buffer,
+      contentType: String,
     },
     summary: String,
     mealType: {
