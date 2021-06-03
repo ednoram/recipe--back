@@ -1,1 +1,1 @@
-exports.connectDB = require("./db");
+exports.connectDB = require("./connectDB");
