@@ -1,7 +1,12 @@
 const { body } = require("express-validator");
 
+const tokenRule = body("token").exists().withMessage("Token is required");
+const nameRule = body("name")
+  .isLength({ min: 1, max: 25 })
+  .withMessage("Name must contain 1-25 characters");
+
 exports.registerRules = [
-  body("name").isLength({ min: 1 }).withMessage("Name is required"),
+  nameRule,
   body("email")
     .isEmail()
     .withMessage("Email address does not exist or is not valid"),
@@ -24,6 +29,13 @@ exports.deleteRules = [
   body("password").isString().withMessage("Password is required"),
 ];
 
-exports.loginWithTokenRules = [
-  body("token").exists().withMessage("Token is required"),
+exports.loginWithTokenRules = [tokenRule];
+
+exports.patchRules = [tokenRule, nameRule];
+
+exports.changePasswordRules = [
+  tokenRule,
+  body("newPassword")
+    .isLength({ min: 8, max: 16 })
+    .withMessage("Password must contain 8-16 characters"),
 ];

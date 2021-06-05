@@ -20,8 +20,10 @@ const deleteUser = async (req, res) => {
         .json({ errors: [{ message: "Password is incorrect" }] });
     }
 
-    await User.findOneAndDelete({ _id: id }, (err) => {
-      if (err) res.status(500).json({ errors: [{ message: err.message }] });
+    User.findOneAndDelete({ _id: id }, (err) => {
+      if (err) {
+        return res.status(500).json({ errors: [{ message: err.message }] });
+      }
 
       return res.status(200).json({ success: true });
     });
