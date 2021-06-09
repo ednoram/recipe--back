@@ -1,0 +1,1 @@
+exports.uploadImage = require("./uploadImage");

@@ -3,7 +3,8 @@ const { verifyUser } = require("../../utils");
 
 const postRecipe = async (req, res) => {
   try {
-    const { title, summary, mealType, ingredients, steps, token } = req.body;
+    const { title, summary, mealType, ingredients, steps, imagePath, token } =
+      req.body;
 
     const { email } = await verifyUser(token, res);
 
@@ -13,6 +14,7 @@ const postRecipe = async (req, res) => {
       steps,
       summary,
       mealType,
+      imagePath,
       ingredients,
     });
 

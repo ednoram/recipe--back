@@ -10,10 +10,7 @@ const Recipe = Schema(
       type: String,
       required: true,
     },
-    img: {
-      data: Buffer,
-      contentType: String,
-    },
+    imagePath: String,
     summary: String,
     mealType: {
       type: String,

@@ -1,10 +1,11 @@
 const { Recipe } = require("../../models");
 const { verifyUser, findRecipeByID } = require("../../utils");
 
-const putRecipe = async (req, res) => {
+const patchRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token, title, summary, mealType, ingredients, steps } = req.body;
+    const { token, title, summary, mealType, ingredients, imagePath, steps } =
+      req.body;
 
     const recipe = await findRecipeByID(id);
     const { email } = await verifyUser(token, res);
@@ -19,13 +20,22 @@ const putRecipe = async (req, res) => {
         .json({ errors: [{ message: "Recipe doesn't belong to user" }] });
     }
 
-    const properties = { title, summary, mealType, ingredients, steps };
+    const properties = {
+      title,
+      steps,
+      summary,
+      mealType,
+      imagePath,
+      ingredients,
+    };
 
     const modifiedProperties = Object.keys(properties).reduce((acc, i) => {
       const _acc = acc;
       if (properties[i] !== undefined) _acc[i] = properties[i];
       return _acc;
     }, {});
+
+    if (!imagePath) delete modifiedProperties.imagePath;
 
     Recipe.findOneAndUpdate(
       { _id: id },
@@ -44,4 +54,4 @@ const putRecipe = async (req, res) => {
   }
 };
 
-module.exports = putRecipe;
+module.exports = patchRecipe;
