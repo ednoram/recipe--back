@@ -22,7 +22,7 @@ const deleteRecipe = async (req, res) => {
     }
 
     if (recipe.imagePath) {
-      fs.unlink(recipe.imagePath, (err) => err && console.log(err));
+      await fs.unlink(recipe.imagePath, () => {});
     }
 
     Recipe.findOneAndDelete({ _id: id }).then((recipe) =>

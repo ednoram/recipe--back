@@ -47,7 +47,7 @@ const patchRecipe = async (req, res) => {
     });
 
     if (recipe.imagePath && properties.imagePath) {
-      fs.unlink(recipe.imagePath, (err) => err && console.log(err));
+      await fs.unlink(recipe.imagePath, () => {});
     }
 
     Recipe.findOneAndUpdate(
