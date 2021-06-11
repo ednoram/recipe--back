@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const { Recipe } = require("../../models");
 const { verifyUser, findRecipeByID } = require("../../utils");
 
@@ -9,6 +11,12 @@ const patchRecipe = async (req, res) => {
 
     const recipe = await findRecipeByID(id);
     const { email } = await verifyUser(token, res);
+
+    if (title === "") {
+      return res.status(422).json({
+        errors: [{ title: "Title must be at least 1 character long" }],
+      });
+    }
 
     if (!recipe) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
@@ -29,17 +37,22 @@ const patchRecipe = async (req, res) => {
       ingredients,
     };
 
-    const modifiedProperties = Object.keys(properties).reduce((acc, i) => {
-      const _acc = acc;
-      if (properties[i] !== undefined) _acc[i] = properties[i];
-      return _acc;
-    }, {});
+    Object.keys(properties).forEach((key) => {
+      if (
+        properties[key] === undefined ||
+        (key === "imagePath" && !properties[key])
+      ) {
+        delete properties[key];
+      }
+    });
 
-    if (!imagePath) delete modifiedProperties.imagePath;
+    if (recipe.imagePath && properties.imagePath) {
+      fs.unlink(recipe.imagePath, (err) => err && console.log(err));
+    }
 
     Recipe.findOneAndUpdate(
       { _id: id },
-      { $set: { ...modifiedProperties } },
+      { $set: { ...properties } },
       { returnOriginal: false },
       (err, recipe) => {
         if (err) {

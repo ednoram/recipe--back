@@ -12,6 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/api/uploads", express.static("uploads"));
+
 app.use("/api/user", userRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/recipes", recipesRoutes);

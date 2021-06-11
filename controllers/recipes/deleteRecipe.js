@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const { Recipe } = require("../../models");
 const { findRecipeByID, verifyUser } = require("../../utils");
 
@@ -7,16 +9,20 @@ const deleteRecipe = async (req, res) => {
     const { token } = req.body;
 
     const recipe = await findRecipeByID(id);
-    const { email } = await verifyUser(token, res);
+    const user = await verifyUser(token, res);
 
     if (!recipe) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (recipe.email !== email) {
+    if (recipe.email !== user.email) {
       return res
         .status(422)
         .json({ errors: [{ message: "Recipe doesn't belong to user" }] });
+    }
+
+    if (recipe.imagePath) {
+      fs.unlink(recipe.imagePath, (err) => err && console.log(err));
     }
 
     Recipe.findOneAndDelete({ _id: id }).then((recipe) =>
