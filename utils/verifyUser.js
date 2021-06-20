@@ -1,10 +1,12 @@
 const jwt = require("jsonwebtoken");
 
+const TOKEN_SECRET = process.env.TOKEN_SECRET || "";
+
 const verifyUser = async (accessToken, res) => {
   try {
     const decodedData = await jwt.verify(
       accessToken,
-      process.env.TOKEN_SECRET,
+      TOKEN_SECRET,
       (err, user) => {
         if (err) res.status(500).json({ errors: [{ message: err.message }] });
 
