@@ -12,6 +12,7 @@ const {
 const {
   login,
   register,
+  getUsers,
   patchUser,
   deleteUser,
   loginWithToken,
@@ -20,6 +21,8 @@ const {
 const { validate } = require("../../utils");
 
 const router = Router();
+
+router.get("/", getUsers);
 
 router.post("/login-with-token", loginWithTokenRules, validate, loginWithToken);
 router.post("/login", loginRules, validate, login);
