@@ -39,3 +39,8 @@ exports.changePasswordRules = [
     .isLength({ min: 8, max: 16 })
     .withMessage("Password must contain 8-16 characters"),
 ];
+
+exports.favoriteRecipeRules = [
+  tokenRule,
+  body("recipeId").isString().withMessage("Recipe ID is required"),
+];

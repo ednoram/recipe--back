@@ -1,6 +1,5 @@
 const { User } = require("../../models");
-const { verifyUser } = require("../../utils");
-const { findUserByEmail } = require("../../utils/find");
+const { verifyUser, findUserByEmail } = require("../../utils");
 
 const patchUser = async (req, res) => {
   try {
@@ -21,9 +20,9 @@ const patchUser = async (req, res) => {
       { $set: { name } },
       { returnOriginal: false },
       (err, user) => {
-        if (err) res.status(500).json({ errors: [{ message: err.message }] });
-
-        return res.status(200).json(user);
+        return err
+          ? res.status(500).json({ errors: [{ message: err.message }] })
+          : res.status(200).json(user);
       }
     );
   } catch (err) {

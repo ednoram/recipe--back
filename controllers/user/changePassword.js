@@ -1,6 +1,10 @@
+const {
+  verifyUser,
+  hashPassword,
+  findUserByEmail,
+  comparePasswords,
+} = require("../../utils");
 const { User } = require("../../models");
-const { findUserByEmail } = require("../../utils/find");
-const { comparePasswords, verifyUser, hashPassword } = require("../../utils");
 
 const changePassword = async (req, res) => {
   try {

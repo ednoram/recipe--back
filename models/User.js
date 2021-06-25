@@ -14,6 +14,10 @@ const User = Schema(
       type: String,
       required: true,
     },
+    favoriteRecipes: {
+      type: [String],
+      default: [],
+    },
   },
   {
     timestamps: true,
