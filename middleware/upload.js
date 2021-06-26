@@ -18,7 +18,7 @@ const storage = diskStorage({
   },
 });
 
-const fileFilter = (req, file, cb) => {
+const fileFilter = (_req, file, cb) => {
   const fileTypes = ["image/png", "image/jpeg", "image/jpg"];
 
   if (fileTypes.includes(file.mimetype)) {
