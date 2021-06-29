@@ -26,7 +26,7 @@ const deleteRecipe = async (req, res) => {
     }
 
     Recipe.findOneAndDelete({ _id: id }).then((recipe) =>
-      res.status(200).json({ success: true, data: recipe })
+      res.status(200).json(recipe)
     );
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });

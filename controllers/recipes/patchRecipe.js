@@ -58,7 +58,7 @@ const patchRecipe = async (req, res) => {
         if (err) {
           return res.status(500).json({ errors: [{ message: err.message }] });
         } else {
-          return res.status(200).json({ success: true, data: recipe });
+          return res.status(200).json(recipe);
         }
       }
     );
