@@ -1,9 +1,9 @@
 const { body, query } = require("express-validator");
 
-const bodyTokenRule = body("token").exists().withMessage("Token is required");
 const bodyNameRule = body("name")
   .isLength({ min: 1, max: 25 })
   .withMessage("Name must contain 1-25 characters");
+const bodyTokenRule = body("token").exists().withMessage("Token is required");
 
 exports.registerRules = [
   bodyNameRule,

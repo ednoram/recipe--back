@@ -1,16 +1,21 @@
 const { body } = require("express-validator");
 
 exports.postRules = [
-  body("title").trim(),
+  body("title")
+    .trim()
+    .isLength({ min: 1, max: 40 })
+    .withMessage("Title is required"),
   body("summary").trim(),
   body("token").exists().withMessage("Token is required"),
-  body("title").isLength({ min: 1, max: 40 }).withMessage("Title is required"),
 ];
 
 exports.patchRules = [
-  body("title").trim(),
+  body("title")
+    .trim()
+    .isLength({ min: 1, max: 40 })
+    .withMessage("Title is required"),
   body("summary").trim(),
-  body("token").isLength({ min: 1, max: 40 }).withMessage("Token is required"),
+  body("token").exists().withMessage("Token is required"),
 ];
 
 exports.deleteRules = [body("token").exists().withMessage("Token is required")];
