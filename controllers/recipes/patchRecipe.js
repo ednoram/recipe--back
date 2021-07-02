@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 const { Recipe } = require("../../models");
-const { verifyUser, findRecipeByID } = require("../../utils");
+const { verifyJWT, findRecipeByID, findUserByEmail } = require("../../utils");
 
 const patchRecipe = async (req, res) => {
   try {
@@ -10,19 +10,22 @@ const patchRecipe = async (req, res) => {
       req.body;
 
     const recipe = await findRecipeByID(id);
-    const { email } = await verifyUser(token, res);
-
-    if (title === "") {
-      return res.status(422).json({
-        errors: [{ title: "Title must be at least 1 character long" }],
-      });
-    }
+    const { email } = await verifyJWT(token, res);
+    const user = await findUserByEmail(email);
 
     if (!recipe) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (recipe.email !== email) {
+    if (!user) {
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
+    } else if (!user.isVerified) {
+      return res
+        .status(500)
+        .json({ errors: [{ message: "Account is not verified" }] });
+    }
+
+    if (recipe.email !== user.email) {
       return res
         .status(422)
         .json({ errors: [{ message: "Recipe doesn't belong to user" }] });

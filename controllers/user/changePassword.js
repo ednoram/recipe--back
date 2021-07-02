@@ -1,5 +1,5 @@
 const {
-  verifyUser,
+  verifyJWT,
   hashPassword,
   findUserByEmail,
   comparePasswords,
@@ -12,7 +12,7 @@ const changePassword = async (req, res) => {
     const { token, currentPassword, newPassword, passwordConfirmation } =
       req.body;
 
-    const { email } = await verifyUser(token, res);
+    const { email } = await verifyJWT(token, res);
     const user = await findUserByEmail(email);
 
     if (!user) {

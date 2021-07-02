@@ -1,6 +1,6 @@
 const {
   createJWT,
-  verifyUser,
+  verifyJWT,
   findUserByEmail,
   comparePasswords,
 } = require("../../utils");
@@ -13,6 +13,10 @@ const login = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
+    } else if (!user.isVerified) {
+      return res
+        .status(500)
+        .json({ errors: [{ message: "Account is not verified" }] });
     }
 
     const passwordIsCorrect = await comparePasswords(password, user.password);
@@ -24,7 +28,7 @@ const login = async (req, res) => {
     }
 
     const accessToken = createJWT(user.email, user._id, "24h", res);
-    const decodedUser = await verifyUser(accessToken, res);
+    const decodedUser = await verifyJWT(accessToken, res);
 
     if (decodedUser) {
       return res.status(200).json({

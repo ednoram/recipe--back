@@ -1,13 +1,21 @@
 const { User } = require("../../models");
-const { verifyUser, findUserByEmail } = require("../../utils");
+const { verifyJWT, findUserByEmail } = require("../../utils");
 
 const patchUser = async (req, res) => {
   try {
     const { id } = req.params;
     const { token, name } = req.body;
 
-    const { email } = await verifyUser(token, res);
+    const { email } = await verifyJWT(token, res);
     const user = await findUserByEmail(email);
+
+    if (!user) {
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
+    } else if (!user.isVerified) {
+      return res
+        .status(500)
+        .json({ errors: [{ message: "Account is not verified" }] });
+    }
 
     if (String(user._id) !== id) {
       return res

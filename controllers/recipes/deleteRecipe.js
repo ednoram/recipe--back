@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 const { Recipe } = require("../../models");
-const { findRecipeByID, verifyUser } = require("../../utils");
+const { findRecipeByID, verifyJWT } = require("../../utils");
 
 const deleteRecipe = async (req, res) => {
   try {
@@ -9,7 +9,15 @@ const deleteRecipe = async (req, res) => {
     const { token } = req.body;
 
     const recipe = await findRecipeByID(id);
-    const user = await verifyUser(token, res);
+    const user = await verifyJWT(token, res);
+
+    if (!user) {
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
+    } else if (!user.isVerified) {
+      return res
+        .status(500)
+        .json({ errors: [{ message: "Account is not verified" }] });
+    }
 
     if (!recipe) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });

@@ -10,7 +10,7 @@ exports.postRules = [
 exports.patchRules = [
   body("title").trim(),
   body("summary").trim(),
-  body("token").exists().withMessage("Token is required"),
+  body("token").isLength({ min: 1, max: 40 }).withMessage("Token is required"),
 ];
 
 exports.deleteRules = [body("token").exists().withMessage("Token is required")];

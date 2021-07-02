@@ -1,9 +1,9 @@
 const { connect } = require("mongoose");
 
-const URI = process.env.DB_CONNECTION || "";
+const { DB_CONNECTION } = require("../constants");
 
 const connectDB = () => {
-  connect(URI, {
+  connect(DB_CONNECTION, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,

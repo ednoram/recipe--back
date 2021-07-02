@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-const TOKEN_SECRET = process.env.TOKEN_SECRET || "";
+const { TOKEN_SECRET } = require("../constants");
 
-const verifyUser = async (accessToken, res) => {
+const verifyJWT = async (accessToken, res) => {
   try {
     const decodedData = await jwt.verify(
       accessToken,
@@ -23,4 +23,4 @@ const verifyUser = async (accessToken, res) => {
     return res.status(500).json({ errors: [{ message: err.message }] });
   }
 };
-module.exports = verifyUser;
+module.exports = verifyJWT;

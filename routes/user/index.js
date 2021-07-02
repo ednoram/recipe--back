@@ -5,9 +5,11 @@ const {
   patchRules,
   deleteRules,
   registerRules,
+  verifyUserRules,
   loginWithTokenRules,
   changePasswordRules,
   favoriteRecipeRules,
+  sendVerificationRules,
 } = require("./validation");
 
 const {
@@ -16,8 +18,10 @@ const {
   getUsers,
   patchUser,
   deleteUser,
+  verifyUser,
   loginWithToken,
   changePassword,
+  sendVerification,
   addFavoriteRecipe,
   removeFavoriteRecipe,
 } = require("../../controllers/user");
@@ -26,7 +30,14 @@ const { validate } = require("../../utils");
 const router = Router();
 
 router.get("/", getUsers);
+router.get("/verify", verifyUserRules, validate, verifyUser);
 
+router.post(
+  "/send-verification",
+  sendVerificationRules,
+  validate,
+  sendVerification
+);
 router.post(
   "/favorite-recipes/add",
   favoriteRecipeRules,

@@ -11,7 +11,13 @@ const deleteUser = async (req, res) => {
     const user = await findUserByID(id);
 
     if (!user) {
-      res.status(404).json({ errors: [{ message: "User does not exist" }] });
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
+    }
+
+    if (!user.isVerified) {
+      return res
+        .status(500)
+        .json({ errors: [{ message: "Account is not verified" }] });
     }
 
     const passwordIsCorrect = await comparePasswords(password, user.password);

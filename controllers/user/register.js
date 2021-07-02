@@ -1,5 +1,9 @@
+const {
+  hashPassword,
+  findUserByEmail,
+  sendVerificationEmail,
+} = require("../../utils");
 const { User } = require("../../models");
-const { findUserByEmail, hashPassword } = require("../../utils");
 
 const register = async (req, res) => {
   try {
@@ -15,9 +19,13 @@ const register = async (req, res) => {
 
     const hashedPassword = await hashPassword(password);
 
-    new User({ name, email, password: hashedPassword })
+    const newUser = await new User({ name, email, password: hashedPassword })
       .save()
-      .then((user) => res.status(200).json(user));
+      .then((res) => res);
+
+    await sendVerificationEmail(newUser, req, res);
+
+    res.status(200).json(newUser);
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }

@@ -2,6 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const User = Schema(
   {
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
     name: {
       type: String,
       required: true,

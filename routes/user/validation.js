@@ -1,12 +1,12 @@
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 
-const tokenRule = body("token").exists().withMessage("Token is required");
-const nameRule = body("name")
+const bodyTokenRule = body("token").exists().withMessage("Token is required");
+const bodyNameRule = body("name")
   .isLength({ min: 1, max: 25 })
   .withMessage("Name must contain 1-25 characters");
 
 exports.registerRules = [
-  nameRule,
+  bodyNameRule,
   body("email")
     .isEmail()
     .withMessage("Email address does not exist or is not valid"),
@@ -29,18 +29,26 @@ exports.deleteRules = [
   body("password").isString().withMessage("Password is required"),
 ];
 
-exports.loginWithTokenRules = [tokenRule];
+exports.loginWithTokenRules = [bodyTokenRule];
 
-exports.patchRules = [tokenRule, nameRule];
+exports.patchRules = [bodyTokenRule, bodyNameRule];
+
+exports.verifyUserRules = [
+  query("token").exists().withMessage("Token is required."),
+];
 
 exports.changePasswordRules = [
-  tokenRule,
+  bodyTokenRule,
   body("newPassword")
     .isLength({ min: 8, max: 16 })
     .withMessage("Password must contain 8-16 characters"),
 ];
 
 exports.favoriteRecipeRules = [
-  tokenRule,
+  bodyTokenRule,
   body("recipeId").isString().withMessage("Recipe ID is required"),
+];
+
+exports.sendVerificationRules = [
+  body("email").isEmail().withMessage("Email is required"),
 ];

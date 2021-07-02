@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const { PORT } = require("./constants");
 const { connectDB } = require("./config");
 const { userRoutes, recipesRoutes, uploadsRoutes } = require("./routes");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
