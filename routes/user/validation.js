@@ -49,6 +49,13 @@ exports.favoriteRecipeRules = [
   body("recipeId").isString().withMessage("Recipe ID is required"),
 ];
 
-exports.sendVerificationRules = [
+exports.sendEmailRules = [
   body("email").isEmail().withMessage("Email is required"),
+];
+
+exports.recoverPasswordRules = [
+  bodyTokenRule,
+  body("newPassword")
+    .isLength({ min: 8, max: 16 })
+    .withMessage("Password must contain 8-16 characters"),
 ];
