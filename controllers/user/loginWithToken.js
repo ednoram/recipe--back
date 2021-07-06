@@ -1,17 +1,20 @@
-const { verifyJWT, createJWT, findUserByEmail } = require("../../utils");
+const User = require("../../models/User");
+const { verifyJWT, createJWT } = require("../../utils");
 
 const loginWithToken = async (req, res) => {
   try {
     const { token } = req.body;
 
     const { email } = await verifyJWT(token, res);
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
-    } else if (!user.isVerified) {
+    }
+
+    if (!user.isVerified) {
       return res
-        .status(500)
+        .status(401)
         .json({ errors: [{ message: "Account is not verified" }] });
     }
 

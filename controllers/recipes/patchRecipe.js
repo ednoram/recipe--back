@@ -1,7 +1,7 @@
 const fs = require("fs");
 
-const { Recipe } = require("../../models");
-const { verifyJWT, findRecipeByID, findUserByEmail } = require("../../utils");
+const { verifyJWT } = require("../../utils");
+const { Recipe, User } = require("../../models");
 
 const patchRecipe = async (req, res) => {
   try {
@@ -9,9 +9,9 @@ const patchRecipe = async (req, res) => {
     const { token, title, summary, mealType, ingredients, imagePath, steps } =
       req.body;
 
-    const recipe = await findRecipeByID(id);
+    const recipe = await Recipe.findOne({ _id: id });
     const { email } = await verifyJWT(token, res);
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (!recipe) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
@@ -19,15 +19,17 @@ const patchRecipe = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
-    } else if (!user.isVerified) {
+    }
+
+    if (!user.isVerified) {
       return res
-        .status(500)
+        .status(401)
         .json({ errors: [{ message: "Account is not verified" }] });
     }
 
     if (recipe.email !== user.email) {
       return res
-        .status(422)
+        .status(401)
         .json({ errors: [{ message: "Recipe doesn't belong to user" }] });
     }
 

@@ -1,19 +1,20 @@
 const { User } = require("../../models");
 const { verifyJWT } = require("../../utils");
-const { findUserByEmail } = require("../../utils/find");
 
 exports.addFavoriteRecipe = async (req, res) => {
   try {
     const { token, recipeId } = req.body;
 
     const { email } = await verifyJWT(token, res);
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
-    } else if (!user.isVerified) {
+    }
+
+    if (!user.isVerified) {
       return res
-        .status(500)
+        .status(401)
         .json({ errors: [{ message: "Account is not verified" }] });
     }
 
@@ -43,13 +44,15 @@ exports.removeFavoriteRecipe = async (req, res) => {
     const { token, recipeId } = req.body;
 
     const { email } = await verifyJWT(token, res);
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
-    } else if (!user.isVerified) {
+    }
+
+    if (!user.isVerified) {
       return res
-        .status(500)
+        .status(401)
         .json({ errors: [{ message: "Account is not verified" }] });
     }
 

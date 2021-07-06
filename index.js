@@ -2,9 +2,14 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 
+const {
+  userRoutes,
+  recipesRoutes,
+  uploadsRoutes,
+  commentsRoutes,
+} = require("./routes");
 const { PORT } = require("./constants");
 const { connectDB } = require("./config");
-const { userRoutes, recipesRoutes, uploadsRoutes } = require("./routes");
 
 const app = express();
 
@@ -17,6 +22,7 @@ app.use("/api/uploads", express.static("uploads"));
 app.use("/api/user", userRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/recipes", recipesRoutes);
+app.use("/api/comments", commentsRoutes);
 
 connectDB();
 

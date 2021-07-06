@@ -1,10 +1,11 @@
-const { findUserByEmail, sendRecoveryEmail } = require("../../utils");
+const User = require("../../models/User");
+const { sendRecoveryEmail } = require("../../utils");
 
 const sendRecovery = async (req, res) => {
   try {
     const { email } = req.body;
 
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });

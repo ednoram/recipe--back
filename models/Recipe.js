@@ -4,7 +4,7 @@ const Recipe = Schema(
   {
     email: {
       type: String,
-      default: null,
+      required: true,
     },
     title: {
       type: String,
@@ -29,12 +29,9 @@ const Recipe = Schema(
         default: [],
       },
     ],
-    date: {
-      type: Date,
-      default: Date.now,
-    },
   },
   {
+    timestamps: true,
     collection: "recipes",
   }
 );

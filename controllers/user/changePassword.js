@@ -1,10 +1,5 @@
-const {
-  verifyJWT,
-  hashPassword,
-  findUserByEmail,
-  comparePasswords,
-} = require("../../utils");
 const { User } = require("../../models");
+const { verifyJWT, hashPassword, comparePasswords } = require("../../utils");
 
 const changePassword = async (req, res) => {
   try {
@@ -13,7 +8,7 @@ const changePassword = async (req, res) => {
       req.body;
 
     const { email } = await verifyJWT(token, res);
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (!user) {
       res.status(404).json({ errors: [{ message: "User does not exist" }] });

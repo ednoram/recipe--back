@@ -1,15 +1,11 @@
-const {
-  hashPassword,
-  findUserByEmail,
-  sendVerificationEmail,
-} = require("../../utils");
 const { User } = require("../../models");
+const { hashPassword, sendVerificationEmail } = require("../../utils");
 
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    const user = await findUserByEmail(email);
+    const user = await User.findOne({ email });
 
     if (user) {
       return res.status(422).json({
