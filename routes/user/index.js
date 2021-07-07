@@ -10,7 +10,7 @@ const {
   loginWithTokenRules,
   changePasswordRules,
   favoriteRecipeRules,
-  recoverPasswordRules,
+  resetPasswordRules,
 } = require("./validation");
 
 const {
@@ -23,7 +23,7 @@ const {
   sendRecovery,
   loginWithToken,
   changePassword,
-  recoverPassword,
+  resetPassword,
   sendVerification,
   addFavoriteRecipe,
   removeFavoriteRecipe,
@@ -48,10 +48,10 @@ router.post(
   removeFavoriteRecipe
 );
 router.post(
-  "/recover-password",
-  recoverPasswordRules,
+  "/reset-password/:email/:token",
+  resetPasswordRules,
   validate,
-  recoverPassword
+  resetPassword
 );
 router.post("/login", loginRules, validate, login);
 router.post("/register", registerRules, validate, register);

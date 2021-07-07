@@ -1,15 +1,15 @@
 const { User } = require("../../models");
 
-const getUsers = (req, res) => {
+const getUsers = async (req, res) => {
   try {
-    User.find().then((users) => {
-      const response = users.map((user) => ({
-        name: user.name,
-        email: user.email,
-      }));
+    const users = await User.find();
 
-      res.status(200).json(response);
-    });
+    const response = users.map((user) => ({
+      name: user.name,
+      email: user.email,
+    }));
+
+    res.status(200).json(response);
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }

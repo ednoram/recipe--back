@@ -11,6 +11,12 @@ const sendRecovery = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
+    if (!user.isVerified) {
+      return res
+        .status(401)
+        .json({ errors: [{ message: "Account is not verified" }] });
+    }
+
     await sendRecoveryEmail(user, res);
 
     res.status(200).json({ success: true });

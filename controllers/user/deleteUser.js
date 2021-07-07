@@ -14,12 +14,6 @@ const deleteUser = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (!user.isVerified) {
-      return res
-        .status(401)
-        .json({ errors: [{ message: "Account is not verified" }] });
-    }
-
     const passwordIsCorrect = await comparePasswords(password, user.password);
 
     if (!passwordIsCorrect) {
@@ -28,12 +22,12 @@ const deleteUser = async (req, res) => {
         .json({ errors: [{ message: "Password is incorrect" }] });
     }
 
-    await Recipe.findOne({ email: user.email }).then((recipes) => {
-      recipes.forEach(async (recipe) => {
-        if (recipe.imagePath) {
-          await fs.unlink(recipe.imagePath, () => {});
-        }
-      });
+    const recipes = await Recipe.find({ email: user.email });
+
+    recipes.forEach(async (recipe) => {
+      if (recipe.imagePath) {
+        await fs.unlink(recipe.imagePath, () => {});
+      }
     });
 
     await Recipe.deleteMany({ email: user.email });

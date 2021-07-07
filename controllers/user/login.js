@@ -25,14 +25,14 @@ const login = async (req, res) => {
         .json({ errors: [{ message: "Password is incorrect" }] });
     }
 
-    const accessToken = createJWT(user.email, user._id, "24h", res);
-    const decodedUser = await verifyJWT(accessToken, res);
+    const token = createJWT(user.email, user._id, "24h", res);
+    const decodedUser = await verifyJWT(token, res);
 
     if (decodedUser) {
       return res.status(200).json({
         success: true,
         data: user,
-        token: accessToken,
+        token: token,
       });
     } else {
       res.status(401).json({ errors: [{ verification: "Not verified" }] });

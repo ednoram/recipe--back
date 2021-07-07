@@ -53,8 +53,7 @@ exports.sendEmailRules = [
   body("email").isEmail().withMessage("Email is required"),
 ];
 
-exports.recoverPasswordRules = [
-  bodyTokenRule,
+exports.resetPasswordRules = [
   body("newPassword")
     .isLength({ min: 8, max: 16 })
     .withMessage("Password must contain 8-16 characters"),

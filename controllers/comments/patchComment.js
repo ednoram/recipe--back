@@ -26,18 +26,13 @@ const patchComment = async (req, res) => {
         .json({ errors: [{ message: "Comment does not belong to user" }] });
     }
 
-    Comment.findOneAndUpdate(
+    const updatedComment = await Comment.findOneAndUpdate(
       { _id: id },
       { $set: { message } },
-      { returnOriginal: false },
-      (err, message) => {
-        if (err) {
-          return res.status(500).json({ errors: [{ message: err.message }] });
-        } else {
-          return res.status(200).json(message);
-        }
-      }
+      { returnOriginal: false }
     );
+
+    res.status(200).json(updatedComment);
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }

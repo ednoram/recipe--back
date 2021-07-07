@@ -1,10 +1,9 @@
 const { User } = require("../../models");
 const { verifyJWT } = require("../../utils");
 
-const patchUser = async (req, res) => {
+const addFavoriteRecipe = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { token, name } = req.body;
+    const { token, recipeId } = req.body;
 
     const { email } = await verifyJWT(token, res);
     const user = await User.findOne({ email });
@@ -13,15 +12,15 @@ const patchUser = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (String(user._id) !== id) {
-      return res
-        .status(422)
-        .json({ errors: [{ message: "User id or token is invalid" }] });
+    if (user.favoriteRecipes.includes(recipeId)) {
+      return res.status(200).json(user);
     }
+
+    const newFavoriteRecipes = [...user.favoriteRecipes, recipeId];
 
     const updatedUser = await User.findOneAndUpdate(
       { email },
-      { $set: { name } },
+      { $set: { favoriteRecipes: newFavoriteRecipes } },
       { returnOriginal: false }
     );
 
@@ -31,4 +30,4 @@ const patchUser = async (req, res) => {
   }
 };
 
-module.exports = patchUser;
+module.exports = addFavoriteRecipe;

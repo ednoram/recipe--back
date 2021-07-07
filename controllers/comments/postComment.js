@@ -20,12 +20,6 @@ const postComment = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (!user.isVerified) {
-      return res
-        .status(401)
-        .json({ errors: [{ message: "Account is not verified" }] });
-    }
-
     const newComment = new Comment({ email, recipeId, message });
 
     const savedComment = await newComment.save();

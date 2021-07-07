@@ -22,6 +22,7 @@ const User = Schema(
       type: [String],
       default: [],
     },
+    resetPasswordToken: String,
   },
   {
     timestamps: true,

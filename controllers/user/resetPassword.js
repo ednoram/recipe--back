@@ -1,0 +1,55 @@
+const { User, Token } = require("../../models");
+const { hashPassword, comparePasswords } = require("../../utils");
+
+const resetPassword = async (req, res) => {
+  try {
+    const { email, token } = req.params;
+    const { newPassword, passwordConfirmation } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ errors: [{ message: "User not found" }] });
+    }
+
+    const tokenObject = await Token.findOne({ email });
+
+    if (!tokenObject) {
+      return res.status(401).json({
+        errors: [{ message: "User does not have reset password token" }],
+      });
+    }
+
+    const tokenIsMatching = await comparePasswords(token, tokenObject.token);
+
+    if (!tokenIsMatching) {
+      return res.status(401).json({ errors: [{ token: "Access denied" }] });
+    }
+
+    if (passwordConfirmation !== newPassword) {
+      res.status(422).json({
+        errors: [
+          {
+            passwordConfirmation:
+              "Password confirmation and new password do not match",
+          },
+        ],
+      });
+    }
+
+    await Token.findOneAndDelete({ email });
+
+    const hashedPassword = await hashPassword(newPassword);
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: user.email },
+      { $set: { password: hashedPassword } }
+    );
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ errors: [{ message: err.message }] });
+  }
+};
+
+module.exports = resetPassword;

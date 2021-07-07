@@ -4,6 +4,7 @@ const { DB_CONNECTION } = require("../constants");
 
 const connectDB = () => {
   connect(DB_CONNECTION, {
+    useCreateIndex: true,
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,

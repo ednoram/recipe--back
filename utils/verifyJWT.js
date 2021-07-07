@@ -2,21 +2,13 @@ const jwt = require("jsonwebtoken");
 
 const { TOKEN_SECRET } = require("../constants");
 
-const verifyJWT = async (accessToken, res) => {
+const verifyJWT = async (token, res) => {
   try {
-    const decodedData = await jwt.verify(
-      accessToken,
-      TOKEN_SECRET,
-      (err, user) => {
-        if (err) res.status(500).json({ errors: [{ message: err.message }] });
+    const decodedData = await jwt.verify(token, TOKEN_SECRET);
 
-        if (!user) {
-          res.status(500).json({ errors: [{ message: "Not decoded" }] });
-        }
-
-        return user;
-      }
-    );
+    if (!decodedData) {
+      res.status(500).json({ errors: [{ message: "Not decoded" }] });
+    }
 
     return decodedData;
   } catch (err) {

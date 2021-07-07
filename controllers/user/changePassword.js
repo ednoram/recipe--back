@@ -44,17 +44,12 @@ const changePassword = async (req, res) => {
 
     const hashedPassword = await hashPassword(newPassword);
 
-    User.findOneAndUpdate(
+    const updatedUser = await User.findOneAndUpdate(
       { email: user.email },
-      { $set: { password: hashedPassword } },
-      (err, user) => {
-        if (err) {
-          return res.status(500).json({ errors: [{ message: err.message }] });
-        }
-
-        return res.status(200).json(user);
-      }
+      { $set: { password: hashedPassword } }
     );
+
+    return res.status(200).json(updatedUser);
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }

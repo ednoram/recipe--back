@@ -15,9 +15,11 @@ const register = async (req, res) => {
 
     const hashedPassword = await hashPassword(password);
 
-    const newUser = await new User({ name, email, password: hashedPassword })
-      .save()
-      .then((res) => res);
+    const newUser = await new User({
+      name,
+      email,
+      password: hashedPassword,
+    }).save();
 
     await sendVerificationEmail(newUser, req, res);
 

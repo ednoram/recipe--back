@@ -13,12 +13,6 @@ const postRecipe = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (!user.isVerified) {
-      return res
-        .status(401)
-        .json({ errors: [{ message: "Account is not verified" }] });
-    }
-
     const newRecipe = new Recipe({
       title,
       email,
