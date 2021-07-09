@@ -1,9 +1,8 @@
 const { nanoid } = require("nanoid");
 
 const { Token } = require("../models");
-const { hashPassword } = require("../utils");
-const { emailTransporter } = require("../middleware");
 const { SENDER_EMAIL, CLIENT_URL } = require("../constants");
+const { hashPassword, mailTransporter } = require("../utils");
 
 const sendRecoveryEmail = async (user, res) => {
   try {
@@ -35,7 +34,7 @@ const sendRecoveryEmail = async (user, res) => {
       html: mailHtml,
     };
 
-    await emailTransporter.sendMail(mailOptions);
+    await mailTransporter.sendMail(mailOptions);
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }

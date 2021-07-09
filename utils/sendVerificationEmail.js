@@ -1,6 +1,5 @@
-const { createJWT } = require("../utils");
 const { SENDER_EMAIL } = require("../constants");
-const { emailTransporter } = require("../middleware");
+const { createJWT, mailTransporter } = require("../utils");
 
 const sendVerificationEmail = async (user, req, res) => {
   const token = createJWT(user.email, user._id, "24h", res);
@@ -21,7 +20,7 @@ const sendVerificationEmail = async (user, req, res) => {
     subject: mailSubject,
   };
 
-  await emailTransporter.sendMail(mailOptions);
+  await mailTransporter.sendMail(mailOptions);
 };
 
 module.exports = sendVerificationEmail;

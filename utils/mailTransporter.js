@@ -2,7 +2,7 @@ const { createTransport } = require("nodemailer");
 
 const { SENDER_EMAIL, SENDER_PASS } = require("../constants");
 
-const transporter = createTransport({
+const mailTransporter = createTransport({
   service: "yahoo",
   host: "smtp.mail.yahoo.com",
   port: 465,
@@ -16,4 +16,4 @@ const transporter = createTransport({
   },
 });
 
-module.exports = transporter;
+module.exports = mailTransporter;
