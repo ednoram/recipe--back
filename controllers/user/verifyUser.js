@@ -1,5 +1,6 @@
 const { User } = require("../../models");
 const { verifyJWT } = require("../../utils");
+const { CLIENT_URL } = require("../../constants");
 
 const verifyUser = async (req, res) => {
   try {
@@ -9,7 +10,8 @@ const verifyUser = async (req, res) => {
 
     if (email) {
       await User.findOneAndUpdate({ email }, { $set: { isVerified: true } });
-      res.send("Account is verified, you can close this tab.");
+
+      res.redirect(`${CLIENT_URL}/login`);
     } else {
       res.send("User not verified.");
     }

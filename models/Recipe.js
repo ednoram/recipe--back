@@ -14,7 +14,7 @@ const Recipe = Schema(
     summary: String,
     mealType: {
       type: String,
-      enum: ["breakfast", "lunch", "dinner", "supper", "snack", "any"],
+      enum: ["breakfast", "lunch", "dinner", "dessert", "snack", "any"],
       default: "any",
     },
     ingredients: [

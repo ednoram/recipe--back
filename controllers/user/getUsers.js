@@ -1,12 +1,13 @@
 const { User } = require("../../models");
 
-const getUsers = async (req, res) => {
+const getUsers = async (_req, res) => {
   try {
     const users = await User.find();
 
     const response = users.map((user) => ({
       name: user.name,
       email: user.email,
+      createdAt: user.createdAt,
     }));
 
     res.status(200).json(response);
