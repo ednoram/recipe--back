@@ -1,3 +1,4 @@
+const path = require("path");
 const multer = require("multer");
 
 const { diskStorage } = multer;
@@ -12,8 +13,7 @@ const storage = diskStorage({
       file.fieldname +
         "--" +
         new Date().toISOString().replace(/:/g, "-") +
-        "--" +
-        file.originalname
+        path.extname(file.originalname)
     );
   },
 });
