@@ -1,13 +1,10 @@
-const { verifyJWT } = require("../../utils");
-const { Comment, User } = require("../../models");
-const Recipe = require("../../models/Recipe");
+const { Comment, Recipe } = require("../../models");
 
 const postComment = async (req, res) => {
   try {
-    const { token, recipeId, message } = req.body;
+    const { recipeId, message } = req.body;
+    const user = req.user;
 
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
     const recipe = await Recipe.findOne({ _id: recipeId });
 
     if (!recipe) {
@@ -20,6 +17,7 @@ const postComment = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
+    const { email } = user;
     const newComment = new Comment({ email, recipeId, message });
 
     const savedComment = await newComment.save();

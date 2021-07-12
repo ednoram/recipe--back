@@ -7,7 +7,6 @@ const {
   registerRules,
   sendEmailRules,
   verifyUserRules,
-  loginWithTokenRules,
   changePasswordRules,
   favoriteRecipeRules,
   resetPasswordRules,
@@ -15,6 +14,7 @@ const {
 
 const {
   login,
+  logout,
   register,
   getUsers,
   patchUser,
@@ -29,6 +29,7 @@ const {
   removeFavoriteRecipe,
 } = require("../../controllers/user");
 const { validate } = require("../../utils");
+const { verify } = require("../../middleware");
 
 const router = Router();
 
@@ -37,12 +38,14 @@ router.get("/verify", verifyUserRules, validate, verifyUser);
 
 router.post(
   "/favorite-recipes/add",
+  verify,
   favoriteRecipeRules,
   validate,
   addFavoriteRecipe
 );
 router.post(
   "/favorite-recipes/remove",
+  verify,
   favoriteRecipeRules,
   validate,
   removeFavoriteRecipe
@@ -53,15 +56,22 @@ router.post(
   validate,
   resetPassword
 );
+router.post("/logout", logout);
+router.post("/login-with-token", loginWithToken);
 router.post("/login", loginRules, validate, login);
 router.post("/register", registerRules, validate, register);
 router.post("/send-recovery", sendEmailRules, validate, sendRecovery);
 router.post("/send-verification", sendEmailRules, validate, sendVerification);
-router.post("/login-with-token", loginWithTokenRules, validate, loginWithToken);
 
-router.patch("/:id", patchRules, validate, patchUser);
-router.patch("/:id/password", changePasswordRules, validate, changePassword);
+router.patch(
+  "/:id/password",
+  verify,
+  changePasswordRules,
+  validate,
+  changePassword
+);
+router.patch("/:id", verify, patchRules, validate, patchUser);
 
-router.delete("/:id", deleteRules, validate, deleteUser);
+router.delete("/:id", verify, deleteRules, validate, deleteUser);
 
 module.exports = router;

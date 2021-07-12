@@ -1,13 +1,11 @@
-const { verifyJWT } = require("../../utils");
-const { Comment, User } = require("../../models");
+const { Comment } = require("../../models");
 
 const patchComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token, message } = req.body;
+    const { message } = req.body;
+    const user = req.user;
 
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
     const comment = await Comment.findOne({ _id: id });
 
     if (!user) {

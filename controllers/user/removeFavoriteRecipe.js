@@ -1,18 +1,16 @@
 const { User } = require("../../models");
-const { verifyJWT } = require("../../utils");
 
 const removeFavoriteRecipe = async (req, res) => {
   try {
-    const { token, recipeId } = req.body;
+    const { recipeId } = req.body;
 
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
+    const user = req.user;
 
     if (!user) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    if (!user.favoriteRecipes || !user.favoriteRecipes.includes(recipeId)) {
+    if (!user.favoriteRecipes.includes(recipeId)) {
       return res.status(200).json(user);
     }
 
@@ -21,7 +19,7 @@ const removeFavoriteRecipe = async (req, res) => {
     );
 
     const updatedUser = await User.findOneAndUpdate(
-      { email },
+      { email: user.email },
       { $set: { favoriteRecipes: newFavoriteRecipes } },
       { returnOriginal: false }
     );

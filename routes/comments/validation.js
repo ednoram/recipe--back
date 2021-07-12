@@ -7,13 +7,7 @@ const messageRule = body("message")
 
 exports.postRules = [
   messageRule,
-  body("token").exists().withMessage("Token is required"),
   body("recipeId").exists().withMessage("Recipe ID is required"),
 ];
 
-exports.patchRules = [
-  messageRule,
-  body("token").exists().withMessage("Token is required"),
-];
-
-exports.deleteRules = [body("token").exists().withMessage("Token is required")];
+exports.patchRules = [messageRule];

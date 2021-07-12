@@ -1,17 +1,10 @@
 const { User } = require("../../models");
-const { verifyJWT } = require("../../utils");
 
 const patchUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token, name } = req.body;
-
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ errors: [{ message: "User not found" }] });
-    }
+    const { name } = req.body;
+    const user = req.user;
 
     if (String(user._id) !== id) {
       return res
@@ -20,7 +13,7 @@ const patchUser = async (req, res) => {
     }
 
     const updatedUser = await User.findOneAndUpdate(
-      { email },
+      { email: user.email },
       { $set: { name } },
       { returnOriginal: false }
     );

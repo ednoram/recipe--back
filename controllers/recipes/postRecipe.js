@@ -1,17 +1,12 @@
-const { verifyJWT } = require("../../utils");
-const { Recipe, User } = require("../../models");
+const { Recipe } = require("../../models");
 
 const postRecipe = async (req, res) => {
   try {
-    const { title, summary, mealType, ingredients, steps, imagePath, token } =
+    const { title, summary, mealType, ingredients, steps, imagePath } =
       req.body;
+    const user = req.user;
 
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ errors: [{ message: "User not found" }] });
-    }
+    const { email } = user;
 
     const newRecipe = new Recipe({
       title,

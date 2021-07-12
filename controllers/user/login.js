@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const { TOKEN_EXPIRY } = require("../../constants");
 const { createJWT, verifyJWT, comparePasswords } = require("../../utils");
 
 const login = async (req, res) => {
@@ -25,18 +26,16 @@ const login = async (req, res) => {
         .json({ errors: [{ message: "Password is incorrect" }] });
     }
 
-    const token = createJWT(user.email, user._id, "24h", res);
-    const decodedUser = await verifyJWT(token, res);
+    const token = createJWT(user.email, user._id, TOKEN_EXPIRY, res);
+    await verifyJWT(token, res);
 
-    if (decodedUser) {
-      return res.status(200).json({
-        success: true,
-        data: user,
-        token: token,
-      });
-    } else {
-      res.status(401).json({ errors: [{ verification: "Not verified" }] });
-    }
+    res.cookie("token", token, {
+      secure: true,
+      httpOnly: true,
+      maxAge: TOKEN_EXPIRY,
+    });
+
+    res.status(200).json(user);
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }

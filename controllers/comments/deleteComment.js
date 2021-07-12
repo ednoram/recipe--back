@@ -1,18 +1,11 @@
-const { verifyJWT } = require("../../utils");
-const { Comment, User } = require("../../models");
+const { Comment } = require("../../models");
 
 const deleteComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token } = req.body;
+    const user = req.user;
 
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
     const comment = await Comment.findOne({ _id: id });
-
-    if (!user) {
-      return res.status(404).json({ errors: [{ message: "User not found" }] });
-    }
 
     if (!comment) {
       return res

@@ -1,20 +1,13 @@
 const fs = require("fs");
 
-const { verifyJWT } = require("../../utils");
-const { Recipe, User } = require("../../models");
+const { Recipe } = require("../../models");
 
 const deleteRecipe = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token } = req.body;
+    const user = req.user;
 
     const recipe = await Recipe.findOne({ _id: id });
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ errors: [{ message: "User not found" }] });
-    }
 
     if (!recipe) {
       return res.status(404).json({ errors: [{ message: "User not found" }] });

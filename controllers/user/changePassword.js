@@ -1,18 +1,11 @@
 const { User } = require("../../models");
-const { verifyJWT, hashPassword, comparePasswords } = require("../../utils");
+const { hashPassword, comparePasswords } = require("../../utils");
 
 const changePassword = async (req, res) => {
   try {
     const { id } = req.params;
-    const { token, currentPassword, newPassword, passwordConfirmation } =
-      req.body;
-
-    const { email } = await verifyJWT(token, res);
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      res.status(404).json({ errors: [{ message: "User does not exist" }] });
-    }
+    const { currentPassword, newPassword, passwordConfirmation } = req.body;
+    const user = req.user;
 
     if (String(user._id) !== id) {
       return res

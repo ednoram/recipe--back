@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { postRules, deleteRules, patchRules } = require("./validation");
+const { postRules, patchRules } = require("./validation");
 
 const {
   getComments,
@@ -9,15 +9,16 @@ const {
   deleteComment,
 } = require("../../controllers/comments");
 const { validate } = require("../../utils");
+const { verify } = require("../../middleware");
 
 const router = Router();
 
 router.get("/", getComments);
 
-router.post("/", postRules, validate, postComment);
+router.post("/", verify, postRules, validate, postComment);
 
-router.patch("/:id", patchRules, validate, patchComment);
+router.patch("/:id", verify, patchRules, validate, patchComment);
 
-router.delete("/:id", deleteRules, validate, deleteComment);
+router.delete("/:id", verify, deleteComment);
 
 module.exports = router;
