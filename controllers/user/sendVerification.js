@@ -13,11 +13,11 @@ const sendVerification = async (req, res) => {
 
     if (user.isVerified) {
       return res
-        .status(500)
+        .status(409)
         .json({ errors: [{ message: "Account is verified" }] });
     }
 
-    await sendVerificationEmail(user, req, res);
+    await sendVerificationEmail(user, req);
 
     res.status(200).json({ success: true });
   } catch (err) {

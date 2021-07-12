@@ -12,15 +12,15 @@ const resetPassword = async (req, res) => {
       return res.status(404).json({ errors: [{ message: "User not found" }] });
     }
 
-    const tokenObject = await Token.findOne({ email });
+    const tokenFromDB = await Token.findOne({ email });
 
-    if (!tokenObject) {
+    if (!tokenFromDB) {
       return res.status(401).json({
         errors: [{ message: "User does not have reset password token" }],
       });
     }
 
-    const tokenIsMatching = await comparePasswords(token, tokenObject.token);
+    const tokenIsMatching = await comparePasswords(token, tokenFromDB.token);
 
     if (!tokenIsMatching) {
       return res.status(401).json({ errors: [{ token: "Access denied" }] });

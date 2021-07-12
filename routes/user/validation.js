@@ -32,6 +32,7 @@ exports.patchRules = [bodyNameRule];
 
 exports.verifyUserRules = [
   query("token").exists().withMessage("Token is required."),
+  query("email").exists().withMessage("Email is required."),
 ];
 
 exports.changePasswordRules = [
