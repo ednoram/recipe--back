@@ -24,7 +24,7 @@ const loginWithToken = async (req, res) => {
     res.cookie("token", newToken, {
       secure: true,
       httpOnly: true,
-      maxAge: TOKEN_EXPIRY,
+      maxAge: TOKEN_EXPIRY * 1000,
     });
 
     res.status(200).json(user);

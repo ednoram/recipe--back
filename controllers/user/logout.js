@@ -5,7 +5,7 @@ const logout = async (_req, res) => {
     res.clearCookie("token", {
       secure: true,
       httpOnly: true,
-      maxAge: TOKEN_EXPIRY,
+      maxAge: TOKEN_EXPIRY * 1000,
     });
     res.end();
   } catch (err) {
