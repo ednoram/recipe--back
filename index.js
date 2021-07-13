@@ -8,6 +8,7 @@ const {
   recipesRoutes,
   uploadsRoutes,
   commentsRoutes,
+  favoriteRecipesRoutes,
 } = require("./routes");
 const { PORT } = require("./constants");
 const { connectDB } = require("./config");
@@ -21,6 +22,7 @@ app.use(cors({ origin: true, credentials: true }));
 
 app.use("/api/uploads", express.static("uploads"));
 
+app.use("/api/favorite-recipes", favoriteRecipesRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/recipes", recipesRoutes);

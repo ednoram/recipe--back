@@ -10,5 +10,3 @@ exports.resetPassword = require("./resetPassword");
 exports.loginWithToken = require("./loginWithToken");
 exports.changePassword = require("./changePassword");
 exports.sendVerification = require("./sendVerification");
-exports.addFavoriteRecipe = require("./addFavoriteRecipe");
-exports.removeFavoriteRecipe = require("./removeFavoriteRecipe");

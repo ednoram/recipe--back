@@ -7,9 +7,8 @@ const {
   registerRules,
   sendEmailRules,
   verifyUserRules,
-  changePasswordRules,
-  favoriteRecipeRules,
   resetPasswordRules,
+  changePasswordRules,
 } = require("./validation");
 
 const {
@@ -25,8 +24,6 @@ const {
   changePassword,
   resetPassword,
   sendVerification,
-  addFavoriteRecipe,
-  removeFavoriteRecipe,
 } = require("../../controllers/user");
 const { validate } = require("../../utils");
 const { verify } = require("../../middleware");
@@ -36,20 +33,6 @@ const router = Router();
 router.get("/", getUsers);
 router.get("/verify", verifyUserRules, validate, verifyUser);
 
-router.post(
-  "/favorite-recipes/add",
-  verify,
-  favoriteRecipeRules,
-  validate,
-  addFavoriteRecipe
-);
-router.post(
-  "/favorite-recipes/remove",
-  verify,
-  favoriteRecipeRules,
-  validate,
-  removeFavoriteRecipe
-);
 router.post(
   "/reset-password/:email/:token",
   resetPasswordRules,

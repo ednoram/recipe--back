@@ -41,10 +41,6 @@ exports.changePasswordRules = [
     .withMessage("Password must contain 8-16 characters"),
 ];
 
-exports.favoriteRecipeRules = [
-  body("recipeId").isString().withMessage("Recipe ID is required"),
-];
-
 exports.sendEmailRules = [
   body("email").isEmail().withMessage("Email is required"),
 ];
