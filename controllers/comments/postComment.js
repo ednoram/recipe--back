@@ -2,7 +2,7 @@ const { Comment, Recipe } = require("../../models");
 
 const postComment = async (req, res) => {
   try {
-    const { recipeId, message } = req.body;
+    const { recipeId, message, rate } = req.body;
     const user = req.user;
 
     const recipe = await Recipe.findOne({ _id: recipeId });
@@ -18,7 +18,7 @@ const postComment = async (req, res) => {
     }
 
     const { email } = user;
-    const newComment = new Comment({ email, recipeId, message });
+    const newComment = new Comment({ email, recipeId, message, rate });
 
     const savedComment = await newComment.save();
 

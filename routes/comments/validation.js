@@ -7,7 +7,11 @@ const messageRule = body("message")
 
 exports.postRules = [
   messageRule,
+  body("rate").exists().withMessage("Rate is required"),
   body("recipeId").exists().withMessage("Recipe ID is required"),
 ];
 
-exports.patchRules = [messageRule];
+exports.patchRules = [
+  messageRule,
+  body("rate").exists().withMessage("Rate is required"),
+];

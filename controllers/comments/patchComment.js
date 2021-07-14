@@ -3,7 +3,7 @@ const { Comment } = require("../../models");
 const patchComment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { message } = req.body;
+    const { message, rate } = req.body;
     const user = req.user;
 
     const comment = await Comment.findOne({ _id: id });
@@ -26,7 +26,7 @@ const patchComment = async (req, res) => {
 
     const updatedComment = await Comment.findOneAndUpdate(
       { _id: id },
-      { $set: { message } },
+      { $set: { message, rate } },
       { returnOriginal: false }
     );
 

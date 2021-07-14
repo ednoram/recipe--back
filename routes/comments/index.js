@@ -13,7 +13,7 @@ const { verify } = require("../../middleware");
 
 const router = Router();
 
-router.get("/", getComments);
+router.get("/:recipeId", getComments);
 
 router.post("/", verify, postRules, validate, postComment);
 
