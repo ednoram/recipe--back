@@ -5,7 +5,7 @@ const { diskStorage } = multer;
 
 const storage = diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, "uploads");
+    cb(null, "public/uploads");
   },
   filename: (_req, file, cb) => {
     cb(

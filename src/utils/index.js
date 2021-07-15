@@ -1,4 +1,3 @@
-exports.validate = require("./validate");
 exports.createJWT = require("./createJWT");
 exports.verifyJWT = require("./verifyJWT");
 exports.hashPassword = require("./hashPassword");

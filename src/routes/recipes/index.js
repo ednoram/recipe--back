@@ -9,8 +9,7 @@ const {
   deleteRecipe,
   getRecipeById,
 } = require("../../controllers/recipes");
-const { validate } = require("../../utils");
-const { verify } = require("../../middleware");
+const { verify, validate } = require("../../middleware");
 
 const router = Router();
 

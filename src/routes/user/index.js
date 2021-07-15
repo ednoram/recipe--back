@@ -25,8 +25,7 @@ const {
   resetPassword,
   sendVerification,
 } = require("../../controllers/user");
-const { validate } = require("../../utils");
-const { verify } = require("../../middleware");
+const { verify, validate } = require("../../middleware");
 
 const router = Router();
 

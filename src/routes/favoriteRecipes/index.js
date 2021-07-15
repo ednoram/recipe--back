@@ -2,13 +2,12 @@ const { Router } = require("express");
 
 const { postValidation } = require("./validation");
 
-const { validate } = require("../../utils");
-const { verify } = require("../../middleware");
 const {
   getFavoriteRecipes,
   postFavoriteRecipe,
   deleteFavoriteRecipe,
 } = require("../../controllers/favoriteRecipes");
+const { verify, validate } = require("../../middleware");
 
 const router = Router();
 
