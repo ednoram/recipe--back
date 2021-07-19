@@ -2,7 +2,7 @@ const { body } = require("express-validator");
 
 const messageRule = body("message")
   .trim()
-  .isLength({ min: 1, max: 1000 })
+  .isLength({ min: 1, max: 800 })
   .withMessage("Message must exist and must be 1-1000 characters long");
 
 exports.postRules = [

@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-const { Recipe } = require("../../models");
+const { Recipe, Comment } = require("../../models");
 
 const deleteRecipe = async (req, res) => {
   try {
@@ -22,6 +22,8 @@ const deleteRecipe = async (req, res) => {
     if (recipe.imagePath) {
       await fs.unlink(recipe.imagePath, () => {});
     }
+
+    await Comment.deleteMany({ recipeId: id });
 
     const deletedRecipe = await Recipe.findOneAndDelete({ _id: id });
 
