@@ -11,7 +11,7 @@ const { verify, validate } = require("../../middleware");
 
 const router = Router();
 
-router.get("/", verify, getFavoriteRecipes);
+router.get("/", getFavoriteRecipes);
 
 router.post("/", verify, postValidation, validate, postFavoriteRecipe);
 

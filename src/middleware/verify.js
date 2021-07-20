@@ -3,7 +3,7 @@ const { verifyJWT } = require("../utils");
 
 const verify = async (req, res, next) => {
   try {
-    const token = req.cookies.token;
+    const { token } = req.body;
 
     if (!token) {
       return res.status(401).json({ errors: [{ auth: "Not authorized" }] });

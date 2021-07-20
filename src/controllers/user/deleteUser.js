@@ -1,7 +1,7 @@
 const fs = require("fs");
 
-const { User, Recipe } = require("../../models");
 const { comparePasswords } = require("../../utils");
+const { User, Recipe, Comment } = require("../../models");
 
 const deleteUser = async (req, res) => {
   try {
@@ -31,6 +31,8 @@ const deleteUser = async (req, res) => {
     });
 
     await Recipe.deleteMany({ email: user.email });
+
+    await Comment.deleteMany({ email: user.email });
 
     await User.findOneAndDelete({ _id: id });
 

@@ -1,10 +1,20 @@
-const { FavoriteRecipe } = require("../../models");
+const { verifyJWT } = require("../../utils");
+const { FavoriteRecipe, User } = require("../../models");
 
 const getFavoriteRecipes = async (req, res) => {
   try {
-    const user = req.user;
+    const { token } = req.query;
 
-    const { email } = user;
+    if (!token) {
+      return res.status(403).json({ errors: [{ token: "Token is required" }] });
+    }
+
+    const { email } = await verifyJWT(token, res);
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      res.status(404).json({ errors: [{ user: "User not found" }] });
+    }
 
     const favoriteRecipes = await FavoriteRecipe.find({ email });
 
