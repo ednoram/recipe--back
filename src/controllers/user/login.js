@@ -30,6 +30,7 @@ const login = async (req, res) => {
     await verifyJWT(token, res);
 
     res.cookie("token", token, {
+      sameSite: "none",
       secure: true,
       httpOnly: true,
       maxAge: TOKEN_EXPIRY * 1000,
