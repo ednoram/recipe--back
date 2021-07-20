@@ -1,5 +1,4 @@
 exports.login = require("./login");
-exports.logout = require("./logout");
 exports.register = require("./register");
 exports.getUsers = require("./getUsers");
 exports.patchUser = require("./patchUser");

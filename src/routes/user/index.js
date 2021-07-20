@@ -13,7 +13,6 @@ const {
 
 const {
   login,
-  logout,
   register,
   getUsers,
   patchUser,
@@ -38,9 +37,8 @@ router.post(
   validate,
   resetPassword
 );
-router.post("/logout", logout);
-router.post("/login-with-token", loginWithToken);
 router.post("/login", loginRules, validate, login);
+router.post("/login-with-token", verify, loginWithToken);
 router.post("/register", registerRules, validate, register);
 router.post("/send-recovery", sendEmailRules, validate, sendRecovery);
 router.post("/send-verification", sendEmailRules, validate, sendVerification);

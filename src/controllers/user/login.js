@@ -29,14 +29,7 @@ const login = async (req, res) => {
     const token = createJWT(user.email, user._id, TOKEN_EXPIRY, res);
     await verifyJWT(token, res);
 
-    res.cookie("token", token, {
-      sameSite: "none",
-      secure: true,
-      httpOnly: true,
-      maxAge: TOKEN_EXPIRY * 1000,
-    });
-
-    res.status(200).json(user);
+    res.status(200).json({ user, token });
   } catch (err) {
     res.status(500).json({ errors: [{ message: err.message }] });
   }
