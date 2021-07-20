@@ -22,6 +22,7 @@ const loginWithToken = async (req, res) => {
     const newToken = createJWT(email, user._id, TOKEN_EXPIRY, res);
 
     res.cookie("token", newToken, {
+      sameSite: "none",
       secure: true,
       httpOnly: true,
       maxAge: TOKEN_EXPIRY * 1000,
