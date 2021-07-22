@@ -4,7 +4,7 @@ const { hashPassword, comparePasswords } = require("../../utils");
 const changePassword = async (req, res) => {
   try {
     const { id } = req.params;
-    const { currentPassword, newPassword, passwordConfirmation } = req.body;
+    const { currentPassword, newPassword } = req.body;
     const user = req.user;
 
     if (String(user._id) !== id) {
@@ -22,17 +22,6 @@ const changePassword = async (req, res) => {
       return res
         .status(403)
         .json({ errors: [{ password: "Password is incorrect" }] });
-    }
-
-    if (passwordConfirmation !== newPassword) {
-      res.status(422).json({
-        errors: [
-          {
-            passwordConfirmation:
-              "Password confirmation and new password do not match",
-          },
-        ],
-      });
     }
 
     const hashedPassword = await hashPassword(newPassword);

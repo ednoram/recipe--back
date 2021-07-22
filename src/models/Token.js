@@ -16,7 +16,6 @@ const Token = Schema(
       expires: 3600,
     },
   },
-
   {
     collection: "tokens",
   }

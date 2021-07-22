@@ -4,7 +4,7 @@ const { hashPassword, comparePasswords } = require("../../utils");
 const resetPassword = async (req, res) => {
   try {
     const { email, token } = req.params;
-    const { newPassword, passwordConfirmation } = req.body;
+    const { newPassword } = req.body;
 
     const user = await User.findOne({ email });
 
@@ -24,17 +24,6 @@ const resetPassword = async (req, res) => {
 
     if (!tokenIsMatching) {
       return res.status(401).json({ errors: [{ token: "Access denied" }] });
-    }
-
-    if (passwordConfirmation !== newPassword) {
-      res.status(422).json({
-        errors: [
-          {
-            passwordConfirmation:
-              "Password confirmation and new password do not match",
-          },
-        ],
-      });
     }
 
     await Token.findOneAndDelete({ email });

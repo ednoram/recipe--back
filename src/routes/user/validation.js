@@ -39,6 +39,9 @@ exports.changePasswordRules = [
   body("newPassword")
     .isLength({ min: 8, max: 16 })
     .withMessage("Password must contain 8-16 characters"),
+  body("passwordConfirmation")
+    .custom((value, { req }) => value === req.body.newPassword)
+    .withMessage("Passwords do not match"),
 ];
 
 exports.sendEmailRules = [
@@ -49,4 +52,7 @@ exports.resetPasswordRules = [
   body("newPassword")
     .isLength({ min: 8, max: 16 })
     .withMessage("Password must contain 8-16 characters"),
+  body("passwordConfirmation")
+    .custom((value, { req }) => value === req.body.newPassword)
+    .withMessage("Passwords do not match"),
 ];
