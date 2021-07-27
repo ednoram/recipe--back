@@ -10,7 +10,11 @@ const Recipe = Schema(
       type: String,
       required: true,
     },
-    imagePath: String,
+    imageId: String,
+    imageUrl: {
+      type: String,
+      default: "",
+    },
     summary: String,
     mealType: {
       type: String,

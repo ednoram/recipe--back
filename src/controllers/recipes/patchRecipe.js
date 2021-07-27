@@ -1,12 +1,11 @@
-const fs = require("fs");
-
 const { Recipe } = require("../../models");
+const { cloudUploader } = require("../../utils");
 
 const patchRecipe = async (req, res) => {
   try {
     const user = req.user;
     const { id } = req.params;
-    const { title, summary, mealType, ingredients, imagePath, steps } =
+    const { title, summary, mealType, ingredients, imageId, imageUrl, steps } =
       req.body;
 
     const recipe = await Recipe.findOne({ _id: id });
@@ -25,27 +24,22 @@ const patchRecipe = async (req, res) => {
       title,
       steps,
       summary,
+      imageId,
+      imageUrl,
       mealType,
-      imagePath,
       ingredients,
     };
 
-    Object.keys(properties).forEach((key) => {
-      if (
-        properties[key] === undefined ||
-        (key === "imagePath" && !properties[key])
-      ) {
-        delete properties[key];
-      }
-    });
+    // Remove undefined properties from properties
+    const modifiedProperties = JSON.parse(JSON.stringify(properties));
 
-    if (recipe.imagePath && properties.imagePath) {
-      await fs.unlink(recipe.imagePath, () => {});
+    if (recipe.imageId && modifiedProperties.imageId) {
+      await cloudUploader.destroy(recipe.imageId, () => {});
     }
 
     const updatedRecipe = await Recipe.findOneAndUpdate(
       { _id: id },
-      { $set: { ...properties } },
+      { $set: { ...modifiedProperties } },
       { returnOriginal: false }
     );
 

@@ -1,5 +1,4 @@
-const fs = require("fs");
-
+const { cloudUploader } = require("../../utils");
 const { Recipe, Comment } = require("../../models");
 
 const deleteRecipe = async (req, res) => {
@@ -19,8 +18,8 @@ const deleteRecipe = async (req, res) => {
         .json({ errors: [{ message: "Recipe doesn't belong to user" }] });
     }
 
-    if (recipe.imagePath) {
-      await fs.unlink(recipe.imagePath, () => {});
+    if (recipe.imageId) {
+      await cloudUploader.destroy(recipe.imageId);
     }
 
     await Comment.deleteMany({ recipeId: id });

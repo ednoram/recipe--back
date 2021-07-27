@@ -2,7 +2,7 @@ const { Recipe } = require("../../models");
 
 const postRecipe = async (req, res) => {
   try {
-    const { title, summary, mealType, ingredients, steps, imagePath } =
+    const { title, summary, mealType, ingredients, steps, imageId, imageUrl } =
       req.body;
     const user = req.user;
 
@@ -13,8 +13,9 @@ const postRecipe = async (req, res) => {
       email,
       steps,
       summary,
+      imageId,
       mealType,
-      imagePath,
+      imageUrl,
       ingredients,
     });
 

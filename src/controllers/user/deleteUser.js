@@ -1,5 +1,3 @@
-const fs = require("fs");
-
 const { comparePasswords } = require("../../utils");
 const { User, Recipe, Comment } = require("../../models");
 
@@ -21,14 +19,6 @@ const deleteUser = async (req, res) => {
         .status(403)
         .json({ errors: [{ message: "Password is incorrect" }] });
     }
-
-    const recipes = await Recipe.find({ email: user.email });
-
-    recipes.forEach(async (recipe) => {
-      if (recipe.imagePath) {
-        await fs.unlink(recipe.imagePath, () => {});
-      }
-    });
 
     await Recipe.deleteMany({ email: user.email });
 

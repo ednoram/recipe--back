@@ -1,12 +1,19 @@
 const { User } = require("../../models");
-const { verifyJWT } = require("../../utils");
+const { verifyJWT, cloudUploader } = require("../../utils");
 
 const uploadImage = async (req, res) => {
   try {
     const { token } = req.body;
+    const file = req.file;
 
     if (!token) {
       return res.status(401).json({ errors: [{ auth: "Not authorized" }] });
+    }
+
+    if (!file) {
+      return res
+        .status(422)
+        .json({ errors: [{ auth: "File is not provided" }] });
     }
 
     const { email } = await verifyJWT(token, res);
@@ -16,8 +23,11 @@ const uploadImage = async (req, res) => {
       res.status(404).json({ errors: [{ user: "User not found" }] });
     }
 
-    const path = req.file.path || "";
-    res.status(200).json({ path });
+    const { public_id, url } = await cloudUploader.upload(req.file.path, {
+      folder: "recipe/",
+    });
+
+    res.status(200).json({ imageId: public_id, imageUrl: url });
   } catch (err) {
     return res.status(500).json({ errors: [{ message: err.message }] });
   }
