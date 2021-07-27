@@ -1,5 +1,6 @@
 const { User } = require("../../models");
 const { verifyJWT, cloudUploader } = require("../../utils");
+const { CLOUDINARY_UPLOAD_FOLDER } = require("../../constants");
 
 const uploadImage = async (req, res) => {
   try {
@@ -23,11 +24,11 @@ const uploadImage = async (req, res) => {
       res.status(404).json({ errors: [{ user: "User not found" }] });
     }
 
-    const { public_id, url } = await cloudUploader.upload(req.file.path, {
-      folder: "recipe/",
+    const { public_id, secure_url } = await cloudUploader.upload(file.path, {
+      folder: CLOUDINARY_UPLOAD_FOLDER,
     });
 
-    res.status(200).json({ imageId: public_id, imageUrl: url });
+    res.status(200).json({ imageId: public_id, imageUrl: secure_url });
   } catch (err) {
     return res.status(500).json({ errors: [{ message: err.message }] });
   }
