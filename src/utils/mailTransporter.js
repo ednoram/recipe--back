@@ -1,6 +1,6 @@
 const { createTransport } = require("nodemailer");
 
-const { SENDER_EMAIL, SENDER_PASS } = require("../constants");
+const { SENDER_EMAIL, SENDER_PASS } = require("@config");
 
 const mailTransporter = createTransport({
   service: "yahoo",

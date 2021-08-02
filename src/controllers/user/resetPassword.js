@@ -1,5 +1,5 @@
-const { User, Token } = require("../../models");
-const { hashPassword, comparePasswords } = require("../../utils");
+const { User, Token } = require("@models");
+const { hashPassword, comparePasswords } = require("@utils");
 
 const resetPassword = async (req, res) => {
   try {

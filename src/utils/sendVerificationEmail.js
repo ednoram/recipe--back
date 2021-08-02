@@ -1,8 +1,8 @@
 const { nanoid } = require("nanoid");
 
-const { Token } = require("../models");
-const { SENDER_EMAIL } = require("../constants");
-const { mailTransporter, hashPassword } = require("../utils");
+const { Token } = require("@models");
+const { SENDER_EMAIL } = require("@config");
+const { mailTransporter, hashPassword } = require("@utils");
 
 const sendVerificationEmail = async (user, req) => {
   const token = nanoid();

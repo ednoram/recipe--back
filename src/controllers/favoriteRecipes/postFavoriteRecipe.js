@@ -1,4 +1,4 @@
-const { FavoriteRecipe, Recipe } = require("../../models/");
+const { FavoriteRecipe, Recipe } = require("@models");
 
 const postFavoriteRecipe = async (req, res) => {
   try {

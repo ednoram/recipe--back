@@ -1,5 +1,5 @@
-const { verifyJWT } = require("../../utils");
-const { FavoriteRecipe, User } = require("../../models");
+const { verifyJWT } = require("@utils");
+const { FavoriteRecipe, User } = require("@models");
 
 const getFavoriteRecipes = async (req, res) => {
   try {

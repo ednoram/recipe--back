@@ -1,4 +1,4 @@
-const { Comment, Recipe } = require("../../models");
+const { Comment, Recipe } = require("@models");
 
 const postComment = async (req, res) => {
   try {

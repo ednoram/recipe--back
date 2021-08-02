@@ -7,8 +7,8 @@ const {
   postComment,
   patchComment,
   deleteComment,
-} = require("../../controllers/comments");
-const { verify, validate } = require("../../middleware");
+} = require("@controllers/comments");
+const { verify, validate } = require("@middleware");
 
 const router = Router();
 

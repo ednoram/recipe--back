@@ -1,5 +1,5 @@
-const User = require("../../models/User");
-const { sendRecoveryEmail } = require("../../utils");
+const { User } = require("@models");
+const { sendRecoveryEmail } = require("@utils");
 
 const sendRecovery = async (req, res) => {
   try {

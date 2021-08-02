@@ -8,8 +8,8 @@ const {
   patchRecipe,
   deleteRecipe,
   getRecipeById,
-} = require("../../controllers/recipes");
-const { verify, validate } = require("../../middleware");
+} = require("@controllers/recipes");
+const { verify, validate } = require("@middleware");
 
 const router = Router();
 

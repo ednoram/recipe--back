@@ -1,5 +1,5 @@
-const { createJWT } = require("../../utils");
-const { TOKEN_EXPIRY } = require("../../constants");
+const { createJWT } = require("@utils");
+const { TOKEN_EXPIRY } = require("@config");
 
 const loginWithToken = async (req, res) => {
   try {

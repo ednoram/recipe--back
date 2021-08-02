@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const { TOKEN_SECRET } = require("../constants");
+const { TOKEN_SECRET } = require("@config");
 
 const createJWT = (email, _id, duration, res) => {
   try {

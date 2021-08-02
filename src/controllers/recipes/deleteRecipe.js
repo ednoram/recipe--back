@@ -1,5 +1,5 @@
-const { cloudUploader } = require("../../utils");
-const { Recipe, Comment } = require("../../models");
+const { cloudUploader } = require("@utils");
+const { Recipe, Comment } = require("@models");
 
 const deleteRecipe = async (req, res) => {
   try {

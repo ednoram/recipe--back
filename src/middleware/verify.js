@@ -1,5 +1,5 @@
-const { User } = require("../models");
-const { verifyJWT } = require("../utils");
+const { User } = require("@models");
+const { verifyJWT } = require("@utils");
 
 const verify = async (req, res, next) => {
   try {

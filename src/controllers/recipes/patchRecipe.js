@@ -1,5 +1,5 @@
-const { Recipe } = require("../../models");
-const { cloudUploader } = require("../../utils");
+const { Recipe } = require("@models");
+const { cloudUploader } = require("@utils");
 
 const patchRecipe = async (req, res) => {
   try {

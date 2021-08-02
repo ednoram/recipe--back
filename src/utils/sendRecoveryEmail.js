@@ -1,8 +1,8 @@
 const { nanoid } = require("nanoid");
 
-const { Token } = require("../models");
-const { SENDER_EMAIL, CLIENT_URL } = require("../constants");
-const { hashPassword, mailTransporter } = require("../utils");
+const { Token } = require("@models");
+const { SENDER_EMAIL, CLIENT_URL } = require("@config");
+const { hashPassword, mailTransporter } = require("@utils");
 
 const sendRecoveryEmail = async (user, res) => {
   try {

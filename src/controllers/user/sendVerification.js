@@ -1,5 +1,5 @@
-const User = require("../../models/User");
-const { sendVerificationEmail } = require("../../utils");
+const { User } = require("@models");
+const { sendVerificationEmail } = require("@utils");
 
 const sendVerification = async (req, res) => {
   try {

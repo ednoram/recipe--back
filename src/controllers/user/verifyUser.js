@@ -1,6 +1,6 @@
-const { User, Token } = require("../../models");
-const { CLIENT_URL } = require("../../constants");
-const { comparePasswords } = require("../../utils");
+const { CLIENT_URL } = require("@config");
+const { User, Token } = require("@models");
+const { comparePasswords } = require("@utils");
 
 const verifyUser = async (req, res) => {
   try {

@@ -1,6 +1,6 @@
-const User = require("../../models/User");
-const { TOKEN_EXPIRY } = require("../../constants");
-const { createJWT, verifyJWT, comparePasswords } = require("../../utils");
+const { User } = require("@models");
+const { TOKEN_EXPIRY } = require("@config");
+const { createJWT, verifyJWT, comparePasswords } = require("@utils");
 
 const login = async (req, res) => {
   try {

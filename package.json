@@ -11,6 +11,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "_moduleAliases": {
+    "@utils" : "src/utils",
+    "@config" : "src/config",
+    "@models" : "src/models",
+    "@routes"  : "src/routes",
+    "@middleware" : "src/middleware",
+    "@controllers" : "src/controllers"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.26.2",
@@ -19,6 +27,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.13.3",
     "multer": "^1.4.2",
     "nanoid": "^3.1.23",

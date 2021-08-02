@@ -23,8 +23,8 @@ const {
   changePassword,
   resetPassword,
   sendVerification,
-} = require("../../controllers/user");
-const { verify, validate } = require("../../middleware");
+} = require("@controllers/user");
+const { verify, validate } = require("@middleware");
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 const { connect } = require("mongoose");
 
-const { DB_CONNECTION } = require("../constants");
+const { DB_CONNECTION } = require("@config");
 
 const connectDB = () => {
   connect(DB_CONNECTION, {

@@ -1,4 +1,4 @@
-const { FavoriteRecipe } = require("../../models/");
+const { FavoriteRecipe } = require("@models");
 
 const deleteFavoriteRecipe = async (req, res) => {
   try {

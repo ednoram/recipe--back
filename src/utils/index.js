@@ -1,3 +1,4 @@
+exports.connectDB = require("./connectDB");
 exports.createJWT = require("./createJWT");
 exports.verifyJWT = require("./verifyJWT");
 exports.hashPassword = require("./hashPassword");

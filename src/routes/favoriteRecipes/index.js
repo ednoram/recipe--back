@@ -6,8 +6,8 @@ const {
   getFavoriteRecipes,
   postFavoriteRecipe,
   deleteFavoriteRecipe,
-} = require("../../controllers/favoriteRecipes");
-const { verify, validate } = require("../../middleware");
+} = require("@controllers/favoriteRecipes");
+const { verify, validate } = require("@middleware");
 
 const router = Router();
 

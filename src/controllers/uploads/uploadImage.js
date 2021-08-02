@@ -1,6 +1,6 @@
-const { User } = require("../../models");
-const { verifyJWT, cloudUploader } = require("../../utils");
-const { CLOUDINARY_UPLOAD_FOLDER } = require("../../constants");
+const { User } = require("@models");
+const { verifyJWT, cloudUploader } = require("@utils");
+const { CLOUDINARY_UPLOAD_FOLDER } = require("@config");
 
 const uploadImage = async (req, res) => {
   try {
