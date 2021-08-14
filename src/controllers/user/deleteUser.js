@@ -1,5 +1,5 @@
-const { comparePasswords } = require("@utils");
 const { User, Recipe, Comment } = require("@models");
+const { comparePasswords, cloudUploader } = require("@utils");
 
 const deleteUser = async (req, res) => {
   try {
@@ -20,10 +20,16 @@ const deleteUser = async (req, res) => {
         .json({ errors: [{ message: "Password is incorrect" }] });
     }
 
+    const userRecipes = await Recipe.find({ email: user.email });
+
+    userRecipes.map(async ({ imageId }) => {
+      if (imageId) {
+        await cloudUploader.destroy(imageId);
+      }
+    });
+
     await Recipe.deleteMany({ email: user.email });
-
     await Comment.deleteMany({ email: user.email });
-
     await User.findOneAndDelete({ _id: id });
 
     res.status(200).json({ success: true });
