@@ -1,6 +1,6 @@
 # Recipe - Back
 
-A REST API for a website where you can find recipes and post your own ones.
+A REST API for a website where you can discover recipes and share your own ones.
 
 ## Features
 
@@ -10,6 +10,7 @@ A REST API for a website where you can find recipes and post your own ones.
 - Upload recipe photo.
 - Favorite recipes.
 - Comments (get, post, edit, delete).
+- Rate recipes.
 - Change user name, password. Delete account.
 - Verify account with email.
 - Forgot password, reset password with email.
@@ -24,10 +25,6 @@ A REST API for a website where you can find recipes and post your own ones.
 - Multer
 - Nodemailer
 - ESLint
-
-## Demo
-
-> https://recipe.ednoram.vercel.app/
 
 ## Usage
 
